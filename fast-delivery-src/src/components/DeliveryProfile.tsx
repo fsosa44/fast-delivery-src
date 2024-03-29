@@ -47,7 +47,7 @@ const DeliveryProfile = () => {
             const userId = urlParts[urlParts.length - 1];
             const fetchedUser = await getUserById(userId);
             setUser(fetchedUser);
-            setIsChecked(fetchedUser.status === "Free" ? true : false);
+            setIsChecked((fetchedUser.status === "Free" || fetchedUser.status === "On Course") ? true : false);
           } else {
             console.error("No se pudo dividir la URL");
           }
@@ -141,9 +141,9 @@ const DeliveryProfile = () => {
               padding: "0 10px",
               textAlign: "center",
             }}
-            className={user?.status === "Free" ? "free" : "disabled"}
+            className={user?.status === "Disabled" ? "disabled" : "free"}
           >
-            {user?.status === "Free" ? "Habilitado" : "Deshabilitado"}
+            {user?.status === "Disabled" ? "Deshabilitado" : "Habilitado"}
           </span>
         </div>
         <label className="switch" style={{ right: "0", top: "18px" }}>

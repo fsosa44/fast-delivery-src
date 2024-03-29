@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import dataLogout from "@/services/dataLogout";
 import { useAppSelector } from "@/redux/hooks";
+import ArrowBack from "@/assets/ArrowBack";
 
 function StatementComponent() {
   const [formData, setFormData] = useState({
@@ -33,22 +34,31 @@ function StatementComponent() {
           dataLogout();
           router.push("/");
         }, 2000);
-      } else {
+      } else if (!formData.alcohol || !formData.drugs || !formData.emotional) {
         toast.success(
           "¡Muchas gracias! Ya puede comenzar a repartir sus paquetes."
         );
         setTimeout(() => {
-          router.push("/home-delivery");
+          updateUser(user.id, { status: "On Course" });
+          router.push("/get-packages");
         }, 2000);
       }
     }
   };
+  useEffect(() => {
+    if (user.status === "On Course") {
+      router.push("/home-delivery");
+    }
+  }, []);
 
   return (
     <div
       style={{ display: "flex", flexDirection: "column", marginTop: "3.5rem" }}
     >
       <div className="headerBox">
+        <div className="arrow-back">
+          <ArrowBack onClick={() => router.back()} />
+        </div>
         <div style={{ display: "flex", margin: "auto" }}>
           <p className="title">Declaración jurada</p>
         </div>
@@ -78,11 +88,7 @@ function StatementComponent() {
           Continuar
         </button>
       </div>
-      <ToastContainer
-        position="top-right"
-        transition={Zoom}
-        autoClose={3000}
-      />
+      <ToastContainer position="top-right" transition={Zoom} autoClose={3000} />
     </div>
   );
 }

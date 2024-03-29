@@ -106,7 +106,7 @@ function DeliveryDrivers() {
                 driverName={user.name}
                 tags={
                   user.status === "On Course"
-                    ? "course"
+                    ? "free"
                     : user.status === "Disabled"
                     ? "disabled"
                     : user.status === "Inactive"
@@ -117,7 +117,7 @@ function DeliveryDrivers() {
                 }
                 tagContent={
                   user.status === "On Course"
-                    ? "En curso"
+                    ? "Habilitado"
                     : user.status === "Disabled"
                     ? "Deshabilitado"
                     : user.status === "Inactive"
