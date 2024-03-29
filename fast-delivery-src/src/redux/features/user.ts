@@ -8,7 +8,8 @@ export const user = createSlice({
         name: "",
         last_name: "",
         role: "",
-        email: ""
+        email: "",
+        status: ""
     } as PayloadAttributes,
     reducers:{
         setUser:(state,action)=>{
@@ -17,6 +18,7 @@ export const user = createSlice({
             state.last_name=action.payload.last_name
             state.role=action.payload.role
             state.email=action.payload.email
+            state.status=action.payload.status
         }
     }
 })

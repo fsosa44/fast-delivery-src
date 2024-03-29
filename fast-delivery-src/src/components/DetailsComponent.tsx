@@ -41,7 +41,9 @@ function DetailsComponent() {
           (driverUser: Users) => driverUser.role === "Driver"
         );
         const freeDrivers = drivers.filter(
-          (freeDriverUser: Users) => freeDriverUser.status === "Free"
+          (freeDriverUser: Users) =>
+            freeDriverUser.status === "Free" ||
+            freeDriverUser.status === "On Course"
         );
         console.log(freeDrivers);
         setUsers(drivers);
@@ -81,7 +83,11 @@ function DetailsComponent() {
             title="Repartidores"
             cantidad={`${freeUsers.length}/${users.length} `}
             accion="Habilitados"
-            percentage={<CircularProgresss percentage={(freeUsers.length / users.length) * 100} />}
+            percentage={
+              <CircularProgresss
+                percentage={(freeUsers.length / users.length) * 100}
+              />
+            }
             button={
               <Link href="/delivery-drivers">
                 <button className="detailsGreenButton">Ver</button>

@@ -1,13 +1,17 @@
+"use client";
 import Navbar from "@/commons/Navbar";
 import ChangePassword from "@/components/ChangePassword";
-import React from "react";
+import Charging from "@/components/Charging";
+import React, { useEffect, useState } from "react";
 
 function page() {
-  return (
-    <div>
-      <ChangePassword />
-    </div>
-  );
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+  return <div>{loading ? <Charging /> : <ChangePassword />}</div>;
 }
 
 export default page;

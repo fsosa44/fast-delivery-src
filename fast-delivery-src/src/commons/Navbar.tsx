@@ -7,8 +7,10 @@ import dataLogout from "@/services/dataLogout";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/features/user";
+import { useAppSelector } from "@/redux/hooks";
 
 function Navbar() {
+  const user = useAppSelector((state) => state.user);
   const dispatch = useDispatch();
   const router = useRouter();
   const clickLogout = async () => {
@@ -30,12 +32,27 @@ function Navbar() {
   };
   return (
     <div className="navbar-container">
-      <span className="appIcon-container">
-        <AppIcon />
-      </span>
-      <span className="logoutIcon-container" onClick={clickLogout}>
-        <LogoutIcon />
-      </span>
+      {user.role === "Driver" ? (
+        <>
+          <span className="appIcon-container" onClick={() => router.push("/home-delivery")}>
+            <AppIcon  />
+          </span>
+          <span className="logoutIcon-container" onClick={clickLogout}>
+            <LogoutIcon />
+          </span>
+        </>
+      ) : user.role === "Admin" ? (
+        <>
+          <span className="appIcon-container" onClick={() => router.push("/manage-orders")}>
+            <AppIcon  />
+          </span>
+          <span className="logoutIcon-container" onClick={clickLogout}>
+            <LogoutIcon />
+          </span>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

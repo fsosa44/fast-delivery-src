@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "@/styles/homeDelivery.css";
 import "@/styles/input.css";
 import "@/styles/buttons.css";
@@ -8,13 +8,22 @@ import HomeDeliveryComponent from "@/components/HomeDeliveryComponent";
 import { useAppSelector } from "@/redux/hooks";
 import LoginPage from "../login/page";
 import NotFound from "@/components/NotFound";
+import Charging from "@/components/Charging";
 
 function HomeDeliveryPage() {
   const user = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
 
   return (
     <div>
-      {!user.id ? (
+      {loading ? (
+        <Charging />
+      ) : !user.id ? (
         <h2
           style={{
             color: "white",

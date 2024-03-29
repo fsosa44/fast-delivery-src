@@ -1,4 +1,7 @@
 import React from "react";
+// type AppIconProps = {
+//   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+// }
 
 function AppIcon() {
   return (

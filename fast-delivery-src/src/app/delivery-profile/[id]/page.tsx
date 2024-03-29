@@ -3,16 +3,34 @@ import Navbar from "@/commons/Navbar";
 import DeliveryProfile from "@/components/DeliveryProfile";
 import DeliveriesHistory from "@/components/DeliveriesHistory";
 import PendingDeliveries from "@/components/PendingDeliveries";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import LoginPage from "../../login/page";
 import NotFound from "@/components/NotFound";
+import Charging from "@/components/Charging";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const user = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
+  useEffect(() => {
+    if (!user.id) {
+      setTimeout(() => {
+        router.push("/404");
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, [user.id, router]);
   return (
     <>
-      {!user.id ? (
+      {loading ? (
+        <Charging />
+      ) : !user.id ? (
         <h2
           style={{
             color: "white",
@@ -33,7 +51,6 @@ const page = () => {
             }}
           >
             <DeliveryProfile />
-          
           </div>
         </>
       ) : (
