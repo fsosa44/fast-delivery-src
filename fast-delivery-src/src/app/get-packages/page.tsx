@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "@/commons/Navbar";
 import GetpackageBox from "@/components/GetPackagesBox";
-import LoginPage from "../login/page";
 import { useAppSelector } from "@/redux/hooks";
 import NotFound from "@/components/NotFound";
 import Charging from "@/components/Charging";

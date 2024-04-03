@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { format } from "date-fns";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/packages`;
 
@@ -27,6 +28,27 @@ export const getAllPackages = async () => {
   } catch (error) {
     console.error("Error al obtener todos los paquetes:", error);
     throw error;
+  }
+};
+
+// get package from today
+
+export const getPackagesToday = async () => {
+  try {
+    const dateToday = format(new Date(), "yyyy-MM-dd");
+    const response = await axios.get(`${API_URL}/date/${dateToday}`, {
+      withCredentials: true,
+    });
+    let newArr = response.data.map((individualPackage: PackageData) => {
+      const adressArr = individualPackage.address.split(",");
+      individualPackage.address = adressArr[0];
+      individualPackage.city = adressArr[1];
+      return individualPackage;
+    });
+    return newArr;
+  } catch (error: any) {
+    console.error("Error al obtener el paquete:", error);
+    return error.response;
   }
 };
 

@@ -5,7 +5,11 @@ import "../styles/getPackages.css";
 import { useRouter } from "next/navigation";
 import ArrowBack from "@/assets/ArrowBack";
 import CheckboxPackage from "@/commons/CheckboxPackage";
-import { startDelivery, getAllPackages } from "@/services/dataPackages";
+import {
+  startDelivery,
+  getAllPackages,
+  getPackagesToday,
+} from "@/services/dataPackages";
 import { PackageProps } from "../../types";
 import { useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
@@ -24,7 +28,7 @@ function GetpackageBox() {
   };
 
   useEffect(() => {
-    getAllPackages()
+    getPackagesToday()
       .then((packages) => {
         const free = packages.filter(
           (freePackage: PackageProps) => freePackage.status === "Free"

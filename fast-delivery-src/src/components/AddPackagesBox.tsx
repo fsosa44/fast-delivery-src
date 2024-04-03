@@ -2,7 +2,6 @@
 import InputText from "@/commons/InputText";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { IoArrowBackCircleOutline } from "react-icons/io5";
 import "../styles/box.css";
 import "../styles/input.css";
 import "../styles/buttons.css";
@@ -25,7 +24,7 @@ function AddPackagesBox() {
     address: "",
     client_name: "",
     weight: "",
-    delivery_date: new Date().toISOString().slice(0, 10),
+    delivery_date: "",
   });
 
   const router = useRouter();
@@ -36,9 +35,6 @@ function AddPackagesBox() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-  const handleDateSelect = (date: Date) => {
-    console.log("Fecha seleccionada:", date.toISOString());
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -115,15 +111,12 @@ function AddPackagesBox() {
               className="inputWhite"
               placeholder="00/00/00"
               name="delivery_date"
-              onSelectPicker={handleDateSelect}
-              onChange={handleChange}
+              data={formData}
+              setData={setFormData}
             />
           </div>
           <div className="buttonSubmitContainer">
-            <button
-              type="submit"
-              className="greenButton"
-            >
+            <button type="submit" className="greenButton">
               Agregar
             </button>
           </div>

@@ -8,11 +8,11 @@ function CheckboxPackage(props: PackageProps) {
     setTick(e.target.checked);
     if (e.target.checked) {
       const tickedArr = props.tickedPackages;
-      tickedArr.push(props.id);
+      tickedArr?.push(props.id);
       props.setTickedPackages(tickedArr);
     } else {
       const tickedArr = props.tickedPackages;
-      const filteredArr = tickedArr.filter((id) => id !== props.id);
+      const filteredArr = tickedArr?.filter((id) => id !== props.id);
       props.setTickedPackages(filteredArr);
     }
   };

@@ -8,7 +8,11 @@ import TrashIcon from "@/assets/TrashIcon";
 import SeeMoreArrow from "@/assets/SeeMoreArrow";
 import CalendarComponent from "./CalendarComponent";
 import AccordionPackageItem from "./AccordionPackageItem";
-import { deletePackage, getAllPackages } from "@/services/dataPackages";
+import {
+  deletePackage,
+  getAllPackages,
+  getPackagesToday,
+} from "@/services/dataPackages";
 import { ToastContainer, Zoom, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -18,7 +22,7 @@ type Package = {
   package_code: string;
   status: string;
   driver_id: number;
-  id: string | undefined
+  id: string | undefined;
 };
 
 function PackagesAdmin() {
@@ -30,10 +34,9 @@ function PackagesAdmin() {
   };
 
   useEffect(() => {
-    getAllPackages()
+    getPackagesToday()
       .then((packages) => {
         setPackages(packages);
-        console.log(packages)
       })
       .catch((error) => {
         console.error(error);
@@ -41,19 +44,19 @@ function PackagesAdmin() {
   }, []);
 
   const handleDeletePackage = async () => {
-    try{
+    try {
       toast.info("Paquete eliminado correctamente");
       setTimeout(() => {
         deletePackage(5);
         window.location.reload();
       }, 2000);
     } catch (error) {
-      console.error("Error al eliminar el paquete:", error)
+      console.error("Error al eliminar el paquete:", error);
       setTimeout(() => {
         toast.error("Error al eliminar el paquete");
       }, 2000);
     }
-  }
+  };
   return (
     <div
       style={{ display: "flex", flexDirection: "column", marginTop: "3.5rem" }}
@@ -71,26 +74,29 @@ function PackagesAdmin() {
 
         <div className="package-amount">{`${packages.length} paquetes`}</div>
         <div className="accordion-container">
-          {packages.map((individualPackage, index)=> (
+          {packages.map((individualPackage, index) => (
             <AccordionPackageItem
-            onClick={() => router.push(`/delivery-map/${individualPackage.id}`)}
-            key={index}
-            id={individualPackage.id}
-            address={individualPackage.address}
-            city={individualPackage.city}
-            additionalElement={<TrashIcon style={{ marginBottom: "17px", cursor: "pointer"}} onClick={handleDeletePackage}/>}
-          />
+              onClick={() =>
+                router.push(`/delivery-map/${individualPackage.id}`)
+              }
+              key={index}
+              id={individualPackage.id}
+              address={individualPackage.address}
+              city={individualPackage.city}
+              additionalElement={
+                <TrashIcon
+                  style={{ marginBottom: "17px", cursor: "pointer" }}
+                  onClick={handleDeletePackage}
+                />
+              }
+            />
           ))}
         </div>
         <div className="see-more-arrow-container">
           <SeeMoreArrow />
         </div>
       </div>
-      <ToastContainer
-              position="top-right"
-              transition={Zoom}
-              autoClose={2000}
-            />
+      <ToastContainer position="top-right" transition={Zoom} autoClose={2000} />
     </div>
   );
 }
