@@ -45,7 +45,6 @@ function DetailsComponent() {
             freeDriverUser.status === "Free" ||
             freeDriverUser.status === "On Course"
         );
-        console.log(freeDrivers);
         setUsers(drivers);
         setFreeUsers(freeDrivers);
       })
@@ -58,7 +57,6 @@ function DetailsComponent() {
           (deliveredPackages: Package) =>
             deliveredPackages.status === "Delivered"
         );
-        console.log(delivered);
         setPackages(packages);
         setDeliveredPackages(delivered);
       })
@@ -85,7 +83,11 @@ function DetailsComponent() {
             accion="Habilitados"
             percentage={
               <CircularProgresss
-                percentage={(freeUsers.length / users.length) * 100}
+                percentage={
+                  users.length !== 0
+                    ? (freeUsers.length / users.length) * 100
+                    : 0
+                }
               />
             }
             button={
@@ -101,7 +103,11 @@ function DetailsComponent() {
             accion="Repartidos"
             percentage={
               <CircularProgresss
-                percentage={(deliveredPackages.length / packages.length) * 100}
+                percentage={
+                  packages.length !== 0
+                    ? (deliveredPackages.length / packages.length) * 100
+                    : 0
+                }
               />
             }
             button={

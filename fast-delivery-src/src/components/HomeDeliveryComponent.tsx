@@ -20,9 +20,6 @@ function HomeDeliveryComponent() {
     setOpenSection(openSection === 1 ? 0 : 1);
   };
 
-  useEffect(() => {
-    console.log(user.status)
-  })
   const handleGetPackagesClick = () => {
     if (user.status === "Free") {
       router.push("/statement");

@@ -5,13 +5,11 @@ import "../styles/box.css";
 import "../styles/manageOrders.css";
 import "../styles/buttons.css";
 import "@/styles/avatar.css";
-import Avatar from "@/commons/Avatar";
 import CarrouselCalendar from "./CarrouselCalendar";
 import { TfiPlus } from "react-icons/tfi";
 import AdminPresentation from "./AdminPresentation";
 import DetailsComponent from "./DetailsComponent";
 import { useAppSelector } from "@/redux/hooks";
-import iconoProfile from "../../public/img/iconoProfile.jpg"
 
 function ManageOrdersBox() {
   const router = useRouter();
@@ -21,14 +19,6 @@ function ManageOrdersBox() {
   };
 
   const user = useAppSelector((state) => state.user);
-
-  /*
-      FUNCIÓN PARA IR AL PERFIL DEL REPARTIDOR
-  */
-
-  // const handleClickDeliveries = () => {
-  //   router.push("/")
-  // }
 
   return (
     <div
@@ -51,7 +41,7 @@ function ManageOrdersBox() {
           <CarrouselCalendar />
         </div>
         <div className="details-container">
-        <DetailsComponent />
+          <DetailsComponent />
         </div>
         <button
           className="greenButton"

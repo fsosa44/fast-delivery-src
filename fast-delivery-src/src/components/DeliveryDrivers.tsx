@@ -45,7 +45,6 @@ function DeliveryDrivers() {
         const drivers = users.filter(
           (driverUser: Users) => driverUser.role === "Driver"
         );
-        console.log(drivers);
         setUsers(drivers);
 
         Promise.all(
@@ -56,7 +55,6 @@ function DeliveryDrivers() {
                   (deliveredPackages: Package) =>
                     deliveredPackages.status === "Delivered"
                 );
-                console.log(delivered);
                 setPackages(packages);
                 setDeliveredPackages(delivered);
               })

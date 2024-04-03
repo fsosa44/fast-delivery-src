@@ -8,11 +8,12 @@ export interface PayloadAttributes {
 }
 
 export interface PackageProps {
-  address: string;
+  address: string | undefined;
   city: string;
   status?: string;
   id: string | undefined;
-  setTickedPackages: React.Dispatch<React.SetStateAction<never[]>>;
-  tickedPackages: never[];
-  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  setTickedPackages?: Dispatch<SetStateAction<undefined[] | string[]>>;
+  tickedPackages?: (string | undefined)[];
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  client_name: string
 }

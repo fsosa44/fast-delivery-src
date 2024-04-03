@@ -21,15 +21,15 @@ export const getAllUsers = async () => {
 };
 
 //get user by id
-export const getUserById = async ( id : string | null) => {
+export const getUserById = async (id: string | null) => {
   try {
     const response = await axios.get(`${API_URL}/single/${id}`, {
       withCredentials: true,
     });
-    return response.data;
-  } catch (error) {
+    return response;
+  } catch (error: any) {
     console.error("Error al obtener el usuario:", error);
-    throw error;
+    return error.response;
   }
 };
 
@@ -75,7 +75,10 @@ type userProps = {
   status?: string;
 };
 //update user
-export const updateUser = async (id: Number |  undefined | null, bodyInfo: userProps) => {
+export const updateUser = async (
+  id: Number | undefined | null,
+  bodyInfo: userProps
+) => {
   try {
     const response = await axios.put(`${API_URL}/update/${id}`, bodyInfo, {
       withCredentials: true,
@@ -83,7 +86,7 @@ export const updateUser = async (id: Number |  undefined | null, bodyInfo: userP
     return response.data[0];
   } catch (error) {
     console.error("Error al actualizar el usuario:", error);
-    throw error; 
+    throw error;
   }
 };
 

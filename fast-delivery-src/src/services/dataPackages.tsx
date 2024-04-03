@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/packages`;
 
@@ -32,23 +32,15 @@ export const getAllPackages = async () => {
 
 // get package by id
 
-export const getPackageById = async ( id : number | string) => {
-
+export const getPackageById = async (id: number | string) => {
   try {
     const response = await axios.get(`${API_URL}/single/${id}`, {
       withCredentials: true,
     });
-    // let newArr = response.data.map((individualPackage: PackageData) => {
-    //   const adressArr = individualPackage.address.split(",");
-    //   individualPackage.address = adressArr[0];
-    //   individualPackage.city = adressArr[1];
-    //   return individualPackage;
-    // });
-    // return newArr;
-    return response.data;
-  } catch (error) {
+    return response;
+  } catch (error: any) {
     console.error("Error al obtener el paquete:", error);
-    throw error;
+    return error.response;
   }
 };
 
@@ -72,7 +64,9 @@ export const getPackageByStatus = async (status: string) => {
 };
 
 //get packages By driver
-export const getPackagesByDriver = async (driver_id: Number | null | undefined) => {
+export const getPackagesByDriver = async (
+  driver_id: Number | null | undefined
+) => {
   try {
     const response = await axios.get(`${API_URL}/driver/${driver_id}`, {
       withCredentials: true,
@@ -107,7 +101,7 @@ export const createPackage = async (packageData: PackageData) => {
 
 // start delivery (put)
 export const startDelivery = async (
-  idsArray: (number | undefined)[] ,
+  idsArray: (string | undefined)[],
   userId: Number | null
 ) => {
   try {
@@ -127,7 +121,10 @@ export const startDelivery = async (
 };
 
 // change status (put)
-export const changeStatus = async (id: number | string | undefined, newStatus: string) => {
+export const changeStatus = async (
+  id: number | string | undefined,
+  newStatus: string
+) => {
   try {
     const response = await axios.put(
       `${API_URL}/status/${id}`,

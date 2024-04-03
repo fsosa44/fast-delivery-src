@@ -14,18 +14,17 @@ import {
 import { ToastContainer, Zoom, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppSelector } from "@/redux/hooks";
-import Map from "./initMap";
+import { PackageProps } from "../../types";
 
-type DeliveryInfo = {
-  address: string;
-  id: number | undefined;
-  client_name: string;
-  city: string;
-  status: string;
-};
 function DeliveryMapBox() {
   const router = useRouter();
-  const [deliveryInfo, setDeliveryInfo] = useState<DeliveryInfo | null>(null);
+  const [deliveryInfo, setDeliveryInfo] = useState<PackageProps>({
+    client_name: "",
+    address: "",
+    id: "",
+    status: "",
+    city: "",
+  });
 
   const handleBackButton = () => {
     router.back();
@@ -42,7 +41,10 @@ function DeliveryMapBox() {
           if (urlParts && urlParts.length > 0) {
             const packageId = urlParts[urlParts.length - 1];
             const fetchedPackage = await getPackageById(packageId);
-            setDeliveryInfo(fetchedPackage);
+            if (fetchedPackage.status === 404) {
+              router.push("/404");
+            }
+            setDeliveryInfo(fetchedPackage.data);
           } else {
             console.error("No se pudo dividir la URL");
           }
@@ -54,7 +56,7 @@ function DeliveryMapBox() {
       }
     };
     fetchPackage();
-  }, []);
+  }, [router]);
 
   const handleEndDelivery = async () => {
     try {
@@ -62,12 +64,12 @@ function DeliveryMapBox() {
       setTimeout(() => {
         changeStatus(deliveryInfo?.id, "Delivered");
         router.push("/home-delivery");
-      }, 2000);
+      }, 1500);
     } catch (error) {
       console.error(`Error al entregar el paquete`, error);
       setTimeout(() => {
         toast.error("¡Lo siento! No se puede entregar su paquete.");
-      }, 2000);
+      }, 1500);
     }
   };
 
@@ -77,12 +79,12 @@ function DeliveryMapBox() {
       setTimeout(() => {
         changeStatus(deliveryInfo?.id, "On Course");
         window.location.reload();
-      }, 2000);
+      }, 1500);
     } catch (error) {
       console.error(`Error al iniciar el reparto del paquete`, error);
       setTimeout(() => {
         toast.error("¡Lo siento! No puede ir a repartir su paquete.");
-      }, 2000);
+      }, 1500);
     }
   };
 
@@ -92,12 +94,12 @@ function DeliveryMapBox() {
       setTimeout(() => {
         changeStatus(deliveryInfo?.id, "Free");
         window.location.reload();
-      }, 2000);
+      }, 1500);
     } catch (error) {
       console.error(`Error al cancelar el reparto del paquete`, error);
       setTimeout(() => {
         toast.error("¡Lo siento! No puede cancelar su reparto.");
-      }, 2000);
+      }, 1500);
     }
   };
 
@@ -107,12 +109,12 @@ function DeliveryMapBox() {
       setTimeout(() => {
         startDelivery([deliveryInfo?.id], user.id);
         window.location.reload();
-      }, 2000);
+      }, 1500);
     } catch (error) {
       console.error(`Error al seleccionar el paquete`, error);
       setTimeout(() => {
         toast.error("¡Lo siento! No puede seleccionar el paquete.");
-      }, 2000);
+      }, 1500);
     }
   };
 
@@ -128,12 +130,10 @@ function DeliveryMapBox() {
       </div>
 
       <div className="boxDeliveryMapStyle">
-        <div className="mapContainer">
-          {/* <Map address="Concordia 3451, Ciudad Autonoma de Buenos Aires" /> */}
-        </div>
+        <div className="mapContainer"></div>
         <DeliveryMapInfo
           address={deliveryInfo?.address}
-          package_code={deliveryInfo?.id}
+          id={deliveryInfo.id}
           client_name={deliveryInfo?.client_name}
           city={deliveryInfo?.city}
         />
@@ -188,11 +188,7 @@ function DeliveryMapBox() {
           ""
         )}
       </div>
-      <ToastContainer
-        position="top-right"
-        transition={Zoom}
-        autoClose={2000}
-      />
+      <ToastContainer position="top-right" transition={Zoom} autoClose={2000} />
     </div>
   );
 }
