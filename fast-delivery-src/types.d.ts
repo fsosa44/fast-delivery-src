@@ -15,5 +15,5 @@ export interface PackageProps {
   setTickedPackages?: Dispatch<SetStateAction<undefined[] | string[]>>;
   tickedPackages?: (string | undefined)[];
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  client_name: string
+  client_name?: string
 }

@@ -5,20 +5,28 @@ import "flatpickr/dist/l10n/es";
 import "@/styles/input.css";
 import "@/assets/ArrowIcon";
 import ArrowIcon from "@/assets/ArrowIcon";
+import { format } from "date-fns";
+
+type PackageData = {
+  address: string;
+  client_name: string;
+  weight: string;
+  delivery_date: string;
+};
 
 type DatePickerProps = {
   className: string;
   placeholder: string;
   name: string;
-  onSelectPicker: (date: Date) => void;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  setData: React.Dispatch<React.SetStateAction<PackageData>>;
+  data: PackageData;
 };
 const InputDatePicker: React.FC<DatePickerProps> = ({
   className,
   placeholder,
   name,
-  onSelectPicker,
-  onChange,
+  data,
+  setData,
 }) => {
   const [openCalendar, setOpenCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -44,7 +52,8 @@ const InputDatePicker: React.FC<DatePickerProps> = ({
         if (selectedDates && selectedDates.length > 0) {
           const newSelectedDate = selectedDates[0];
           setSelectedDate(newSelectedDate);
-          onSelectPicker(newSelectedDate);
+          const formattedDate = format(newSelectedDate, "yyyy-MM-dd");
+          setData({ ...data, [name]: formattedDate });
         }
       },
       onClose: () => {
@@ -57,7 +66,7 @@ const InputDatePicker: React.FC<DatePickerProps> = ({
     return () => {
       picker.destroy();
     };
-  }, [name, onSelectPicker, selectedDate]);
+  }, [name, selectedDate]);
 
   const handleArrowButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -95,7 +104,6 @@ const InputDatePicker: React.FC<DatePickerProps> = ({
           value={selectedDate ? selectedDate.toLocaleDateString("es-ES") : ""} // Mostrar la fecha seleccionada en el input
           data-input
           onClick={handleInputClick}
-          onChange={onChange}
         />
         <button className="arrow-container" onClick={handleArrowButtonClick}>
           <ArrowIcon />

@@ -127,7 +127,9 @@ function DeliveryDrivers() {
                 percentage={
                   <CircularProgresss
                     percentage={
-                      (deliveredPackages.length / packages.length) * 100
+                      packages.length
+                        ? (deliveredPackages.length / packages.length) * 100
+                        : 0
                     }
                   />
                 }
