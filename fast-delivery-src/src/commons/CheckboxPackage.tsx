@@ -24,9 +24,10 @@ function CheckboxPackage(props: PackageProps) {
           className="input-checkbox"
           onChange={handleCheckbox}
           checked={tick}
+          
         />
       </div>
-      <div>
+      <div onClick={props.onClick} style={{cursor: "pointer", width: "100%"}}>
         <h2 className="box-content">{props.address},</h2>
         <h2 className="box-content">{props.city}</h2>
       </div>

@@ -28,28 +28,40 @@ function StatementComponent() {
   const validateForm = () => {
     if (formSubmitted) {
       if (formData.alcohol || formData.drugs || formData.emotional) {
+        console.log("Se han detectado drogas o alcohol...");
         toast.warn("Lo siento, no puede comenzar su día de repartos.");
-        setTimeout(() => {
-          updateUser(user.id, { status: "Disabled" });
-          dataLogout();
-          router.push("/");
-        }, 2000);
-      } else if (!formData.alcohol || !formData.drugs || !formData.emotional) {
+        updateUser(user.id, { status: "Disabled" })
+          .then(() => {
+            setTimeout(() => {
+              dataLogout()
+                .then(() => {
+                  router.push("/");
+                })
+                .catch((error) => console.error(error));
+            }, 2000);
+          })
+          .catch((error) => console.error(error));
+      } else if (!formData.alcohol && !formData.drugs && !formData.emotional) {
+        console.log("No se han detectado drogas ni alcohol...");
         toast.success(
           "¡Muchas gracias! Ya puede comenzar a repartir sus paquetes."
         );
-        setTimeout(() => {
-          updateUser(user.id, { status: "On Course" });
-          router.push("/get-packages");
-        }, 2000);
+        updateUser(user.id, { status: "On Course" })
+          .then(() => {
+            setTimeout(() => {
+              router.push("/get-packages");
+            }, 2000);
+          })
+          .catch((error) => console.error("Error enabling user:", error));
       }
     }
   };
   useEffect(() => {
+    console.log(user.status);
     if (user.status === "On Course") {
       router.push("/home-delivery");
     }
-  }, []);
+  }, [user.status]);
 
   return (
     <div

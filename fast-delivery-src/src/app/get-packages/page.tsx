@@ -13,6 +13,7 @@ function Box() {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
+    console.log(user.status)
   }, []);
   return (
     <div>
