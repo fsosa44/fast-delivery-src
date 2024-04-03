@@ -10,11 +10,11 @@ import { PackageProps } from "../../types";
 import { useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
 
-
-
 function GetpackageBox() {
   const [packages, setPackages] = useState<PackageProps[]>([]);
-  const [tickedPackages, setTickedPackages] = useState([]);
+  const [tickedPackages, setTickedPackages] = useState<string[] | undefined[]>(
+    []
+  );
   const router = useRouter();
 
   const user = useAppSelector((state) => state.user);
@@ -79,7 +79,9 @@ function GetpackageBox() {
               city={individualPackage.city}
               setTickedPackages={setTickedPackages}
               tickedPackages={tickedPackages}
-              onClick={() => router.push(`/delivery-map/${individualPackage.id}`)}
+              onClick={() =>
+                router.push(`/delivery-map/${individualPackage.id}`)
+              }
             />
           ))}
         </ul>

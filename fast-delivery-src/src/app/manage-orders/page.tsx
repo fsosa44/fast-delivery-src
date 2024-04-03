@@ -2,7 +2,6 @@
 import Navbar from "@/commons/Navbar";
 import ManageOrdersBox from "@/components/ManageOrdersBox";
 import React, { useEffect, useState } from "react";
-import LoginPage from "../login/page";
 import { useAppSelector } from "@/redux/hooks";
 import NotFound from "@/components/NotFound";
 import Charging from "@/components/Charging";
@@ -13,7 +12,7 @@ function ManageOrders() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 700);
   }, []);
   return (
     <div>
