@@ -73,6 +73,7 @@ function GetpackageBox() {
         <ul>
           {packages.map((individualPackage, index) => (
             <CheckboxPackage
+              client_name={individualPackage.client_name}
               id={individualPackage.id}
               key={index}
               address={individualPackage.address}
