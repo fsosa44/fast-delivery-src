@@ -72,9 +72,10 @@ function PackagesAdmin() {
           <CalendarComponent />
         </div>
 
-        <div className="package-amount">{`${packages.length} paquetes`}</div>
+        <div className="package-amount">{packages.length === undefined ? "0 paquetes" : `${packages.length} paquetes`}</div>
         <div className="accordion-container">
-          {packages.map((individualPackage, index) => (
+          {packages.length ? 
+          packages.map((individualPackage, index) => (
             <AccordionPackageItem
               onClick={() =>
                 router.push(`/delivery-map/${individualPackage.id}`)
@@ -90,7 +91,7 @@ function PackagesAdmin() {
                 />
               }
             />
-          ))}
+          )): <p style={{textAlign: "center"}}>No se han encontrado paquetes.</p>}
         </div>
         <div className="see-more-arrow-container">
           <SeeMoreArrow />

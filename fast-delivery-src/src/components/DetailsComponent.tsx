@@ -7,7 +7,7 @@ import DetailsElement from "@/commons/DetailsElement";
 import CircularProgresss from "@/commons/CircularProgresss";
 import Link from "next/link";
 import { getAllUsers } from "@/services/dataUser";
-import { getAllPackages } from "@/services/dataPackages";
+import { getAllPackages, getPackagesToday } from "@/services/dataPackages";
 
 type Package = {
   address: string;
@@ -51,7 +51,7 @@ function DetailsComponent() {
       .catch((error) => {
         console.error(error);
       });
-    getAllPackages()
+    getPackagesToday()
       .then((packages) => {
         const delivered = packages.filter(
           (deliveredPackages: Package) =>

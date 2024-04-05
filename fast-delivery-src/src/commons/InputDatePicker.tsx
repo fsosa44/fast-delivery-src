@@ -66,7 +66,7 @@ const InputDatePicker: React.FC<DatePickerProps> = ({
     return () => {
       picker.destroy();
     };
-  }, [name, selectedDate]);
+  }, [name, selectedDate, data]);
 
   const handleArrowButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
