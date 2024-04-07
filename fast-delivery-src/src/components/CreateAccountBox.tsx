@@ -14,6 +14,7 @@ import ArrowBack from "@/assets/ArrowBack";
 import dataRegister from "@/services/dataRegister";
 import { ToastContainer, Zoom, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PasswordRequirements from "@/commons/PasswordRequirements";
 
 function CreateAccountBox() {
   const [formData, setFormData] = useState({
@@ -36,25 +37,37 @@ function CreateAccountBox() {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      await dataRegister(formData);
-      toast.success(
-        "¡Registro realizado correctamente! Verifica tu correo electrónico"
-      );
-      setTimeout(() => {
-        router.push("/");
-      }, 3000);
-    } catch (error) {
-      console.error(error);
-      toast.error("Error al registrar el usuario");
+    if (
+      !formData.name ||
+      !formData.last_name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      toast.info("Debes completar todos los campos");
+    } else if (formData.password != formData.confirmPassword) {
+      toast.info("Las contraseñas no coinciden");
+    } else {
+      try {
+        await dataRegister(formData);
+        toast.success(
+          "¡Registro realizado correctamente! Verifica tu correo electrónico"
+        );
+        setTimeout(() => {
+          router.push("/");
+        }, 3000);
+      } catch (error) {
+        console.error(error);
+        toast.error("Error al registrar el usuario");
+      }
+      setFormData({
+        name: "",
+        last_name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
     }
-    setFormData({
-      name: "",
-      last_name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
   };
   return (
     <div
@@ -126,6 +139,7 @@ function CreateAccountBox() {
             disabled={false}
             onChange={handleChange}
           />
+           {formData.password.length >= 1 ? <PasswordRequirements /> : ""}
           <InputPassword
             className="inputWhite"
             placeholder="Confirmar Contraseña"
