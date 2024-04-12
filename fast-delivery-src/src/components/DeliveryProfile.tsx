@@ -136,9 +136,17 @@ const DeliveryProfile = () => {
               padding: "0 10px",
               textAlign: "center",
             }}
-            className={user?.status === "Disabled" ? "disabled" : "free"}
+            className={user?.status === "Disabled" ? "disabled" : user?.status === "Unvalidated" ? "disabled" : "free"}
           >
-            {user?.status === "Disabled" ? "Deshabilitado" : "Habilitado"}
+            {user?.status === "Disabled"
+              ? "Deshabilitado"
+              : user?.status === "On Course"
+              ? "Habilitado"
+              : user?.status === "Free"
+              ? "Habilitado"
+              : user?.status === "Unvalidated"
+              ? "Deshabilitado"
+              : ""}
           </span>
         </div>
         <label className="switch" style={{ right: "0", top: "18px" }}>
