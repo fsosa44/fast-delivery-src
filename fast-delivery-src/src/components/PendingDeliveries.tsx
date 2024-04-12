@@ -10,6 +10,8 @@ import AccordionPackageItem from "./AccordionPackageItem";
 import { ToastContainer, Zoom, toast } from "react-toastify";
 import { useAppSelector } from "@/redux/hooks";
 import { changeStatus, getPackagesByDriver } from "@/services/dataPackages";
+import { getUserById } from "@/services/dataUser";
+import { useRouter } from "next/navigation";
 
 type PendingDistributionsProps = {
   onClick: () => void;
@@ -30,28 +32,50 @@ function PendingDeliveries({ onClick }: PendingDistributionsProps) {
 
   const user = useAppSelector((state) => state.user);
 
+  const router = useRouter();
+
   const handleClick = () => {
     setOpenSection(openSection === 1 ? 0 : 1);
     onClick();
   };
 
   useEffect(() => {
-    getPackagesByDriver(2)
-      .then((packages) => {
-        const pending = packages.filter(
-          (pendingPackage: Package) => pendingPackage.status === "Pending"
-        );
-        const onCourse = packages.filter(
-          (onCoursePackage: Package) => onCoursePackage.status === "On Course"
-        );
-
-        const combinedPackages = pending.concat(onCourse);
-        setPackages(combinedPackages);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+    const fetchUserAndPackages = async () => {
+      try {
+        const currentURL = window.location.href;
+        if (currentURL) {
+          const urlParts = currentURL.split("/");
+          if (urlParts && urlParts.length > 0) {
+            const userId = urlParts[urlParts.length - 1];
+            const fetchedUser = await getUserById(userId);
+            if (fetchedUser.status === 404) {
+              router.push("/404");
+              return;
+            }
+            getPackagesByDriver(userId)
+              .then((packages) => {
+                const delivered = packages.filter(
+                  (pendingPackage: Package) =>
+                    pendingPackage.status === "Pending"
+                  || pendingPackage.status === "On Course"
+                );
+                setPackages(delivered);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          } else {
+            console.error("No se pudo dividir la URL");
+          }
+        } else {
+          console.error("No se pudo obtener la URL actual");
+        }
+      } catch (error) {
+        console.error("Error al obtener el repartidor solicitado:", error);
+      }
+    };
+    fetchUserAndPackages();
+  }, [router]);
 
   const handleInitDeliver = async () => {
     try {

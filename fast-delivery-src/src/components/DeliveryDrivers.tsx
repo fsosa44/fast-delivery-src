@@ -47,21 +47,29 @@ function DeliveryDrivers() {
         );
         setUsers(drivers);
 
+        // Usar Promise.all para esperar que todas las llamadas getPackagesByDriver se completen
         Promise.all(
-          drivers.map((driver: Users) => {
-            return getPackagesByDriver(driver.id)
+          drivers.map((driver: Users) =>
+            getPackagesByDriver(driver.id)
               .then((packages) => {
-                const delivered = packages.filter(
-                  (deliveredPackages: Package) =>
-                    deliveredPackages.status === "Delivered"
-                );
-                setPackages(packages);
-                setDeliveredPackages(delivered);
+                // Verificar si packages es undefined antes de llamar a filter()
+                if (packages) {
+                  const delivered = packages.filter(
+                    (deliveredPackage: Package) =>
+                      deliveredPackage.status === "Delivered"
+                  );
+                  setPackages((prevPackages) => [...prevPackages, ...packages]);
+                  setDeliveredPackages((prevDeliveredPackages) => [
+                    ...prevDeliveredPackages,
+                    ...delivered,
+                  ]);
+                }
               })
               .catch((error) => {
-                console.error(error);
-              });
-          })
+                // Manejar el error aquí
+                console.error(`Error al obtener los paquetes del conductor ${driver.id}:`, error);
+              })
+          )
         );
       })
       .catch((error) => {
@@ -97,50 +105,59 @@ function DeliveryDrivers() {
             ""
           )}
           <ul>
-            {users.map((user, index) => (
-              <DeliveryDriverCommon
-                onClick={() => router.push(`/delivery-profile/${user.id}`)}
-                key={index}
-                driverName={user.name}
-                tags={
-                  user.status === "On Course"
-                    ? "free"
-                    : user.status === "Disabled"
-                    ? "disabled"
-                    : user.status === "Inactive"
-                    ? "inactive"
-                    : user.status === "Free"
-                    ? "free"
-                    : ""
-                }
-                tagContent={
-                  user.status === "On Course"
-                    ? "Habilitado"
-                    : user.status === "Disabled"
-                    ? "Deshabilitado"
-                    : user.status === "Inactive"
-                    ? "Inactivo"
-                    : user.status === "Free"
-                    ? "Habilitado"
-                    : ""
-                }
-                percentage={
-                  <CircularProgresss
-                    percentage={
-                      packages.length
-                        ? (deliveredPackages.length / packages.length) * 100
-                        : 0
-                    }
-                  />
-                }
-                avatar={
-                  <Avatar
-                    src="/img/iconoUsers2.png"
-                    className="distributors-stats-avatar"
-                  />
-                }
-              />
-            ))}
+            {users.map((user, index) => {
+              const userPackages = packages.filter(
+                (individualPackage) => individualPackage.driver_id === user.id
+              );
+              const userDeliveredPackages = deliveredPackages.filter(
+                (individualPackage) => individualPackage.driver_id === user.id
+              );
+              const percentage =
+                userPackages.length > 0
+                  ? (userDeliveredPackages.length / userPackages.length) * 100
+                  : 0;
+
+              return (
+                <DeliveryDriverCommon
+                  onClick={() => router.push(`/delivery-profile/${user.id}`)}
+                  key={index}
+                  driverName={user.name}
+                  tags={
+                    user.status === "On Course"
+                      ? "free"
+                      : user.status === "Disabled"
+                      ? "disabled"
+                      : user.status === "Inactive"
+                      ? "inactive"
+                      : user.status === "Free"
+                      ? "free"
+                      : user.status === "Unvalidated"
+                      ? "disabled"
+                      : ""
+                  }
+                  tagContent={
+                    user.status === "On Course"
+                      ? "Habilitado"
+                      : user.status === "Disabled"
+                      ? "Deshabilitado"
+                      : user.status === "Inactive"
+                      ? "Inactivo"
+                      : user.status === "Free"
+                      ? "Habilitado"
+                      : user.status === "Unvalidated"
+                      ? "Deshabilitado"
+                      : ""
+                  }
+                  percentage={<CircularProgresss percentage={percentage} />}
+                  avatar={
+                    <Avatar
+                      src="/img/iconoUsers2.png"
+                      className="distributors-stats-avatar"
+                    />
+                  }
+                />
+              );
+            })}
           </ul>
         </div>
         <div className="see-more-arrow-container">

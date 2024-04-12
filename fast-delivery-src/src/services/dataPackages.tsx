@@ -87,7 +87,7 @@ export const getPackageByStatus = async (status: string) => {
 
 //get packages By driver
 export const getPackagesByDriver = async (
-  driver_id: Number | null | undefined
+  driver_id: string| null | number
 ) => {
   try {
     const response = await axios.get(`${API_URL}/driver/${driver_id}`, {
@@ -100,11 +100,9 @@ export const getPackagesByDriver = async (
       return individualPackage;
     });
     return newArr;
-
-    // return response.data;
   } catch (error) {
     console.error("Error al obtener los paquetes:", error);
-    throw error;
+    // throw error;
   }
 };
 
