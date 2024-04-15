@@ -84,6 +84,13 @@
   font-weight: 400;
 }
 
+.delivery-date{
+  color: #18009d;
+  font-size: 10px;
+  line-height: 15px;
+  font-weight: 400;
+}
+
 .tags-container {
   display: flex;
   flex-direction: column;
