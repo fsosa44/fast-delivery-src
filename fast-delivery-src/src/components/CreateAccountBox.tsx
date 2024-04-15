@@ -47,9 +47,18 @@ function CreateAccountBox() {
       toast.info("Debes completar todos los campos");
     } else if (formData.password != formData.confirmPassword) {
       toast.info("Las contraseñas no coinciden");
+    } else if (
+      !/[A-Z]/.test(formData.password) ||
+      !/\d/.test(formData.password) ||
+      !/[a-z]/.test(formData.password) ||
+      formData.password.length < 8
+    ) {
+      toast.info("Contraseña inválida");
     } else {
-      try {
+      try { 
+        toast.loading("Registrando...");
         await dataRegister(formData);
+        toast.dismiss();
         toast.success(
           "¡Registro realizado correctamente! Verifica tu correo electrónico"
         );
@@ -139,7 +148,7 @@ function CreateAccountBox() {
             disabled={false}
             onChange={handleChange}
           />
-           {formData.password.length >= 1 ? <PasswordRequirements /> : ""}
+          {formData.password.length >= 1 ? <PasswordRequirements /> : ""}
           <InputPassword
             className="inputWhite"
             placeholder="Confirmar Contraseña"

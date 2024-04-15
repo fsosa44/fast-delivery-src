@@ -24,6 +24,7 @@ type Package = {
   status: string;
   driver_id: number;
   id: string | undefined;
+  delivery_date: string;
 };
 
 function PendingDeliveries({ onClick }: PendingDistributionsProps) {
@@ -139,6 +140,7 @@ function PendingDeliveries({ onClick }: PendingDistributionsProps) {
                 id={individualPackage.id}
                 address={individualPackage.address}
                 city={individualPackage.city}
+                delivery_date={individualPackage.delivery_date}
                 tags={
                   individualPackage.status === "On Course"
                     ? "course"

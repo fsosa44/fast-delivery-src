@@ -139,8 +139,8 @@
 }
 
 .disabled {
-  background-color: rgba(98, 98, 98, 0.2);
-  color: #626262;
+  background: rgb(209, 209, 209);
+  color: #626262 !important;
   border: none;
 }
 

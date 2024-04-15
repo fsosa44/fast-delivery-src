@@ -123,8 +123,9 @@
 }
 
 .disabled {
-  background: rgb(162, 161, 161);
+  background: rgb(209, 209, 209);
   color: #626262 !important;
+  border: none;
 }
 
 .drivers-container {

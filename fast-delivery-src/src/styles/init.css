@@ -115,7 +115,7 @@
   font-weight: 600;
   text-transform: uppercase;
   text-align: center;
-  padding: 0 10px;
+  padding: 0 8px;
 }
 
 .pending {
@@ -127,8 +127,9 @@
 }
 
 .disabled{
-  background: rgb(162, 161, 161);
+  background: rgb(209, 209, 209);
   color: #626262 !important;
+  border: none;
 }
 
 .delivered {
