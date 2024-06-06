@@ -7,7 +7,7 @@ import NotFound from "@/components/NotFound";
 import Navbar from "@/commons/Navbar";
 import Charging from "@/components/Charging";
 
-function statement() {
+function Statement() {
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -52,4 +52,4 @@ function statement() {
   );
 }
 
-export default statement;
+export default Statement;

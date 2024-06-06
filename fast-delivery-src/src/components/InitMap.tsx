@@ -7,7 +7,7 @@ type MapProps = {
   address: string | undefined;
 };
 
-function initMap({ address }: MapProps) {
+function InitMap({ address }: MapProps) {
   const [center, setCenter] = useState<{ lat: number; lng: number }>({
     lat: 0,
     lng: 0,
@@ -44,4 +44,4 @@ function initMap({ address }: MapProps) {
   );
 }
 
-export default initMap;
+export default InitMap;
