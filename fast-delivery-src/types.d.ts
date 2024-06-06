@@ -1,5 +1,5 @@
 export interface PayloadAttributes {
-  id: Number | null;
+  id: string | number | null;
   email: string;
   name: string;
   role: string;
@@ -15,5 +15,5 @@ export interface PackageProps {
   setTickedPackages?: Dispatch<SetStateAction<undefined[] | string[]>>;
   tickedPackages?: (string | undefined)[];
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  client_name?: string
+  client_name?: string;
 }

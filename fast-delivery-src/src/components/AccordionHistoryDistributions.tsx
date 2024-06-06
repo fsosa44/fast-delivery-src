@@ -6,12 +6,8 @@ import "@/styles/buttons.css";
 import AccordionPackageItem from "./AccordionPackageItem";
 import ArrowIcon from "@/assets/ArrowIcon";
 import { PackageProps } from "../../types";
-import {
-  getPackageByStatus,
-  getPackagesByDriver,
-} from "@/services/dataPackages";
+import { getPackagesByDriver } from "@/services/dataPackages";
 import { useAppSelector } from "@/redux/hooks";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type AccordionHistoryDistributionsProps = {

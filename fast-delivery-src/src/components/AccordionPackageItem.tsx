@@ -5,7 +5,7 @@ import BoxIcon from "@/assets/BoxIcon";
 
 type PackageItemProps = {
   id: string | undefined;
-  address: string;
+  address: string | undefined;
   city: string;
   tags?: string;
   delivery_date?: string;
@@ -20,25 +20,29 @@ function AccordionPackageItem({
   city,
   tags,
   delivery_date,
-  additionalElement,
   tagContent,
   onClick,
 }: PackageItemProps) {
-
   const formatSpanishDate = (dateString: string | undefined) => {
-    if (!dateString) return '';
+    if (!dateString) return "";
     const date = new Date(dateString);
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+    return `${day < 10 ? "0" : ""}${day}/${
+      month < 10 ? "0" : ""
+    }${month}/${year}`;
   };
 
   return (
     <div className="package-item">
-      <div className="box-icon-info-container" style={{cursor: "pointer"}} onClick={onClick}>
+      <div
+        className="box-icon-info-container"
+        style={{ cursor: "pointer" }}
+        onClick={onClick}
+      >
         <BoxIcon />
-        <div >
+        <div>
           <h1 className="package-code">#{id}</h1>
           <h2 className="package-direction">{address},</h2>
           <h2 className="package-direction">{city}</h2>
