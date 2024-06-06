@@ -87,7 +87,7 @@ export const getPackageByStatus = async (status: string) => {
 
 //get packages By driver
 export const getPackagesByDriver = async (
-  driver_id: string| null | number
+  driver_id: string | null | number
 ) => {
   try {
     const response = await axios.get(`${API_URL}/driver/${driver_id}`, {
@@ -122,7 +122,7 @@ export const createPackage = async (packageData: PackageData) => {
 // start delivery (put)
 export const startDelivery = async (
   idsArray: (string | undefined)[],
-  userId: Number | null
+  userId: string | number | null
 ) => {
   try {
     const response = await axios.put(
