@@ -10,7 +10,6 @@ import Charging from "@/components/Charging";
 function DeliveryMapPage() {
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
-
   const router = useRouter();
 
   useEffect(() => {

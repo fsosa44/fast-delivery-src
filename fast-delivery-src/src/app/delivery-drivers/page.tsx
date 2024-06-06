@@ -3,7 +3,6 @@ import Navbar from "@/commons/Navbar";
 import DeliveryDrivers from "@/components/DeliveryDrivers";
 import { useAppSelector } from "@/redux/hooks";
 import React, { useEffect, useState } from "react";
-import LoginPage from "../login/page";
 import NotFound from "@/components/NotFound";
 import Charging from "@/components/Charging";
 

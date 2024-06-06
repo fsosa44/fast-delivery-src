@@ -3,7 +3,7 @@ import Charging from "@/components/Charging";
 import VerifyAccount from "@/components/VerifyAccount";
 import React, { useEffect, useState } from "react";
 
-function page() {
+function ConfirmEmail() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -13,4 +13,4 @@ function page() {
   return <div>{loading ? <Charging /> : <VerifyAccount />}</div>;
 }
 
-export default page;
+export default ConfirmEmail;

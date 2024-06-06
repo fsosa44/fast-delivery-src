@@ -6,7 +6,6 @@ import "@/styles/buttons.css";
 import Navbar from "@/commons/Navbar";
 import HomeDeliveryComponent from "@/components/HomeDeliveryComponent";
 import { useAppSelector } from "@/redux/hooks";
-import LoginPage from "../login/page";
 import NotFound from "@/components/NotFound";
 import Charging from "@/components/Charging";
 

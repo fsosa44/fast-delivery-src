@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "@/styles/statement.css";
 import StatementComponent from "@/components/StatementComponent";
 import { useAppSelector } from "@/redux/hooks";
-import LoginPage from "../login/page";
 import NotFound from "@/components/NotFound";
 import Navbar from "@/commons/Navbar";
 import Charging from "@/components/Charging";

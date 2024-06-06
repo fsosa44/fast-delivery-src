@@ -5,12 +5,9 @@ import "@/styles/input.css";
 import InputEmail from "@/commons/InputEmail";
 import InputText from "@/commons/InputText";
 import InputPassword from "@/commons/InputPassword";
-// import PswIcon from "@/components/PswIcon";
-// import UserIcon from "@/components/UserIcon";
 import CircularProgresss from "@/commons/CircularProgresss";
 
-
-function page() {
+function Palette() {
   const [form, setForm] = useState({
     inputText: "",
     InputEmail: "",
@@ -106,9 +103,7 @@ function page() {
         }}
       >
         <div className="input-container">
-          <span className="icon-container">
-            {/* <UserIcon /> */}
-          </span>
+          <span className="icon-container">{/* <UserIcon /> */}</span>
           <InputEmail
             className="inputBlue"
             placeholder="InputEmail blue"
@@ -128,9 +123,7 @@ function page() {
           value={form.inputText}
         />
         <div className="input-container">
-          <span className="icon-container">
-            {/* <PswIcon /> */}
-          </span>
+          <span className="icon-container">{/* <PswIcon /> */}</span>
           <InputPassword
             className="inputBlue"
             placeholder="InputPassword blue"
@@ -146,4 +139,4 @@ function page() {
   );
 }
 
-export default page;
+export default Palette;

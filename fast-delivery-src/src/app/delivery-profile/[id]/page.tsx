@@ -5,13 +5,11 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import NotFound from "@/components/NotFound";
 import Charging from "@/components/Charging";
-import { useRouter } from "next/navigation";
 
 const DeliveryProfilePage = () => {
   const user = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
 
-  const router = useRouter();
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);

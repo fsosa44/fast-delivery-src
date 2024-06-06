@@ -1,10 +1,9 @@
 "use client";
-import Navbar from "@/commons/Navbar";
 import Charging from "@/components/Charging";
 import SendMailChangePsw from "@/components/SendMailChangePsw";
 import React, { useEffect, useState } from "react";
 
-function page() {
+function ForgotPassword() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -14,4 +13,4 @@ function page() {
   return <div>{loading ? <Charging /> : <SendMailChangePsw />}</div>;
 }
 
-export default page;
+export default ForgotPassword;
