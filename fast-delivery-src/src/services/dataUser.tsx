@@ -76,7 +76,7 @@ type userProps = {
 };
 //update user
 export const updateUser = async (
-  id: Number | undefined | null,
+  id: string | number | null,
   bodyInfo: userProps
 ) => {
   try {
