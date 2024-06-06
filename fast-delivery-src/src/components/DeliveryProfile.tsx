@@ -14,19 +14,19 @@ import ArrowBack from "@/assets/ArrowBack";
 import { getUserById, updateUser } from "@/services/dataUser";
 import DeliveriesHistory from "@/components/DeliveriesHistory";
 import PendingDeliveries from "@/components/PendingDeliveries";
-
-type User = {
-  id: number | undefined;
-  name: string;
-  last_name: string;
-  role: string;
-  status: string;
-};
+import { PayloadAttributes } from "../../types";
 
 const DeliveryProfile = () => {
   const [openSection, setOpenSection] = useState(0);
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<PayloadAttributes>({
+    id: "",
+    name: "",
+    role: "",
+    last_name: "",
+    status: "",
+    email: "",
+  });
   const [isChecked, setIsChecked] = useState(false);
   const [userStatus, setUserStatus] = useState("Free");
 
@@ -136,7 +136,13 @@ const DeliveryProfile = () => {
               padding: "0 10px",
               textAlign: "center",
             }}
-            className={user?.status === "Disabled" ? "disabled" : user?.status === "Unvalidated" ? "disabled" : "free"}
+            className={
+              user?.status === "Disabled"
+                ? "disabled"
+                : user?.status === "Unvalidated"
+                ? "disabled"
+                : "free"
+            }
           >
             {user?.status === "Disabled"
               ? "Deshabilitado"
