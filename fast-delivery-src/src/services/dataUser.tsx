@@ -60,7 +60,7 @@ export const deleteUserById = async ({ id }: DataUserProps) => {
 export const changePassword = async () => {
   try {
     const response = await axios.put(
-      `http://localhost:5001/api/:id/forgot-password`
+      `${API_URL}/:id/forgot-password`
     );
     return response.data;
   } catch (error) {
