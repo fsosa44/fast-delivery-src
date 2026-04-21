@@ -60,61 +60,53 @@ function DeliveryMapBox() {
 
   const handleEndDelivery = async () => {
     try {
+      await changeStatus(deliveryInfo?.id, "Delivered");
       toast.success("Paquete entregado.");
       setTimeout(() => {
-        changeStatus(deliveryInfo?.id, "Delivered");
         router.push("/home-delivery");
       }, 1500);
     } catch (error) {
       console.error(`Error al entregar el paquete`, error);
-      setTimeout(() => {
-        toast.error("¡Lo siento! No se puede entregar su paquete.");
-      }, 1500);
+      toast.error("¡Lo siento! No se puede entregar su paquete.");
     }
   };
 
   const handleStartDelivery = async () => {
     try {
+      await changeStatus(deliveryInfo?.id, "On Course");
       toast.success("Ya puede ir a repartir su paquete.");
       setTimeout(() => {
-        changeStatus(deliveryInfo?.id, "On Course");
         window.location.reload();
       }, 1500);
     } catch (error) {
       console.error(`Error al iniciar el reparto del paquete`, error);
-      setTimeout(() => {
-        toast.error("¡Lo siento! No puede ir a repartir su paquete.");
-      }, 1500);
+      toast.error("¡Lo siento! No puede ir a repartir su paquete.");
     }
   };
 
   const handleCancelDelivery = async () => {
     try {
+      await changeStatus(deliveryInfo?.id, "Free");
       toast.info("Reparto Cancelado.");
       setTimeout(() => {
-        changeStatus(deliveryInfo?.id, "Free");
         window.location.reload();
       }, 1500);
     } catch (error) {
       console.error(`Error al cancelar el reparto del paquete`, error);
-      setTimeout(() => {
-        toast.error("¡Lo siento! No puede cancelar su reparto.");
-      }, 1500);
+      toast.error("¡Lo siento! No puede cancelar su reparto.");
     }
   };
 
   const handleSelectPackage = async () => {
     try {
+      await startDelivery([deliveryInfo?.id], user.id);
       toast.success("Paquete Seleccionado.");
       setTimeout(() => {
-        startDelivery([deliveryInfo?.id], user.id);
         window.location.reload();
       }, 1500);
     } catch (error) {
       console.error(`Error al seleccionar el paquete`, error);
-      setTimeout(() => {
-        toast.error("¡Lo siento! No puede seleccionar el paquete.");
-      }, 1500);
+      toast.error("¡Lo siento! No puede seleccionar el paquete.");
     }
   };
 
