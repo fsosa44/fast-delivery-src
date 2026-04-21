@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { format } from "date-fns";
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/packages`;
+const API_URL = `/api/packages`;
 
 type PackageData = {
   address: string;
